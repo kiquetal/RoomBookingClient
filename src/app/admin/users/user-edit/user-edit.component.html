@@ -1,0 +1,30 @@
+<h1>{{user.id ==null? 'Add':'Edit'}} User</h1>
+
+
+<form action="some-url-goes-here"  #templateFrom="ngForm">
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" placeholder="user name" #nameField="ngModel" required [(ngModel)]="formUser.name" name="name"
+           (change)="checkValid()"
+    >
+    <div class="alert alert-danger" *ngIf="nameField.invalid && nameField.touched">{{nameField.name}} is required</div>
+
+  </div>
+
+  <div class="form-group" *ngIf="user.id==null"> <!-- only show this field on adding a user -->
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password"  #nameField2="ngModel"  (change)="checkEquality()" placeholder="password" required   [(ngModel)]="password" name="password">
+    <div class="alert alert-danger" *ngIf="nameField2.invalid && nameField2.touched">{{nameField2.name}} is required</div>
+
+    <label for="password2">Retype Password</label>
+    <input type="password" class="form-control" id="password2" #nameField3="ngModel" (change)="checkEquality()" placeholder="password" [(ngModel)]="password2" name="password2">
+    <div class="alert alert-danger" *ngIf="nameField3.invalid ">{{nameField3.name}}is required</div>
+    <div class="alert alert-danger" *ngIf="!equality && nameField3.touched">Password must match!</div>
+
+  </div>
+
+  <button type="button" class="btn btn-primary" [disabled]="templateFrom.invalid || !nameIsValid || !equality" (click)="onSubmit()">Save</button>
+</form>
+
+
